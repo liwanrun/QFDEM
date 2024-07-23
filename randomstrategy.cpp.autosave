@@ -1,0 +1,115 @@
+#include "randomstrategy.h"
+#include <random>
+
+
+UniformPointStrategy::UniformPointStrategy(int seed)
+    : randseed(seed)
+{
+
+}
+
+UniformPointStrategy::~UniformPointStrategy()
+{
+
+}
+
+std::vector<QPointF> UniformPointStrategy::Sample(QRectF doi, size_t size)
+{
+    std::vector<QPointF> points;
+
+    std::random_device rd;
+    std::default_random_engine generator((0 == randseed) ? rd() : randseed);
+    std::uniform_real_distribution<double> XcoordDistribution(doi.left(), doi.right());
+    std::uniform_real_distribution<double> YcoordDistribution(doi.bottom(), doi.top());
+
+    for(int i = 0; i < size; i++)
+    {
+        double x = XcoordDistribution(generator);
+        double y = YcoordDistribution(generator);
+        points.emplace_back(QPointF(x, y));
+    }
+    return points;
+}
+
+FractalPointStrategy::~FractalPointStrategy()
+{
+
+}
+
+std::vector<QPointF> FractalPointStrategy::Sample(QRectF doi, size_t size)
+{
+    return std::vector<QPointF>();
+}
+
+RegularPointStrategy::~RegularPointStrategy()
+{
+
+}
+
+std::vector<QPointF> RegularPointStrategy::Sample(QRectF doi, size_t size)
+{
+    return std::vector<QPointF>();
+}
+
+
+UniformValueStrategy::UniformValueStrategy(int seed, double a, double b)
+    : ValueStrategy (seed),
+      m_lower(a),
+      m_upper(b)
+{
+
+}
+
+UniformValueStrategy::~UniformValueStrategy()
+{
+
+}
+
+std::vector<double> UniformValueStrategy::Sample(size_t size)
+{
+    std::vector<double> series;
+    std::random_device rd;
+    std::default_random_engine generator((0 == randseed) ? rd() : randseed);
+    std::uniform_real_distribution<double> distribution(m_lower, m_upper);
+
+    for(int i = 0; i < size; i++)
+    {
+        series.emplace_back(distribution(generator));
+    }
+    return series;
+}
+
+ExponentValueStrategy::ExponentValueStrategy(int seed, double theta, double min, double max)
+    : ValueStrategy (seed),
+      m_theta(theta),
+      m_lower(min),
+      m_upper(max)
+{
+
+}
+
+ExponentValueStrategy::~ExponentValueStrategy()
+{
+
+}
+
+std::vector<double> ExponentValueStrategy::Sample(size_t size)
+{
+    std::vector<double> series;
+    std::random_device rd;
+    std::default_random_engine generator((0 == randseed) ? rd() : randseed);
+    std::exponential_distribution<double> distribution(m_theta);
+
+    for(int i = 0; i < size; i++)
+    {
+        double value;
+        do
+        {
+            value = distribution(generator);
+        }
+        while(value < m_lower || value > m_upper);
+
+        series.emplace_back(distribution(generator));
+    }
+    return series;
+}

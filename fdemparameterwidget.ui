@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FDEMParameterWidget</class>
+ <widget class="QWidget" name="FDEMParameterWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>304</width>
+    <height>667</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Arial</family>
+    <weight>75</weight>
+    <bold>true</bold>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_10">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QToolBox" name="paraPanel">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="preferencePage">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>304</width>
+        <height>367</height>
+       </rect>
+      </property>
+      <attribute name="icon">
+       <iconset resource="FDEM2D.qrc">
+        <normaloff>:/images/resources/settings_menu.png</normaloff>:/images/resources/settings_menu.png</iconset>
+      </attribute>
+      <attribute name="label">
+       <string>Preference</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_11">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="solutionPage">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>304</width>
+        <height>367</height>
+       </rect>
+      </property>
+      <attribute name="icon">
+       <iconset resource="FDEM2D.qrc">
+        <normaloff>:/images/resources/solution_tool.png</normaloff>:/images/resources/solution_tool.png</iconset>
+      </attribute>
+      <attribute name="label">
+       <string>Solution</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="geometryPage">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>304</width>
+        <height>367</height>
+       </rect>
+      </property>
+      <attribute name="icon">
+       <iconset resource="FDEM2D.qrc">
+        <normaloff>:/images/resources/model_tool.png</normaloff>:/images/resources/model_tool.png</iconset>
+      </attribute>
+      <attribute name="label">
+       <string>Geometry</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="meshPage">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>304</width>
+        <height>367</height>
+       </rect>
+      </property>
+      <attribute name="icon">
+       <iconset resource="FDEM2D.qrc">
+        <normaloff>:/images/resources/mesh_tool.png</normaloff>:/images/resources/mesh_tool.png</iconset>
+      </attribute>
+      <attribute name="label">
+       <string>Meshing</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="groupPage">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>304</width>
+        <height>367</height>
+       </rect>
+      </property>
+      <attribute name="icon">
+       <iconset resource="FDEM2D.qrc">
+        <normaloff>:/images/resources/pqGroup.png</normaloff>:/images/resources/pqGroup.png</iconset>
+      </attribute>
+      <attribute name="label">
+       <string>Group</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="contactPage">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>304</width>
+        <height>367</height>
+       </rect>
+      </property>
+      <attribute name="icon">
+       <iconset resource="FDEM2D.qrc">
+        <normaloff>:/images/resources/contact_tool.png</normaloff>:/images/resources/contact_tool.png</iconset>
+      </attribute>
+      <attribute name="label">
+       <string>Contact</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="materialPage">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>304</width>
+        <height>367</height>
+       </rect>
+      </property>
+      <attribute name="icon">
+       <iconset resource="FDEM2D.qrc">
+        <normaloff>:/images/resources/material_tool.png</normaloff>:/images/resources/material_tool.png</iconset>
+      </attribute>
+      <attribute name="label">
+       <string>Material</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="boundaryPage">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>304</width>
+        <height>367</height>
+       </rect>
+      </property>
+      <attribute name="icon">
+       <iconset resource="FDEM2D.qrc">
+        <normaloff>:/images/resources/boundary_tool.png</normaloff>:/images/resources/boundary_tool.png</iconset>
+      </attribute>
+      <attribute name="label">
+       <string>Boundary</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="temporalPage">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>304</width>
+        <height>367</height>
+       </rect>
+      </property>
+      <attribute name="icon">
+       <iconset resource="FDEM2D.qrc">
+        <normaloff>:/images/resources/temporal.png</normaloff>:/images/resources/temporal.png</iconset>
+      </attribute>
+      <attribute name="label">
+       <string>Temporal</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_9">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="historyPage">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>304</width>
+        <height>367</height>
+       </rect>
+      </property>
+      <attribute name="icon">
+       <iconset resource="FDEM2D.qrc">
+        <normaloff>:/images/resources/history_tool.png</normaloff>:/images/resources/history_tool.png</iconset>
+      </attribute>
+      <attribute name="label">
+       <string>History</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_8">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="FDEM2D.qrc"/>
+ </resources>
+ <connections/>
+</ui>

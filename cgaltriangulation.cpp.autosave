@@ -1,0 +1,176 @@
+#include "cgaltriangulation.h"
+
+#include<QDebug>
+
+#include <vtkPolyData.h>
+
+#define CGAL_MESH_2_OPTIMIZER_VERBOSE
+
+TriangleMesh::TriangleMesh()
+{
+    this->n_iters = 10;
+    this->m_size = 2.0;
+    this->m_shape = 0.125;
+    this->m_color = QColor(204,204,81);
+}
+
+TriangleMesh::~TriangleMesh()
+{
+
+}
+
+int TriangleMesh::getMaxIterationNumber() const
+{
+    return this->n_iters;
+}
+
+void TriangleMesh::setMaxIterationNumber(int value)
+{
+    this->n_iters = value;
+}
+
+double TriangleMesh::getSize() const
+{
+    return this->m_size;
+}
+
+void TriangleMesh::setSize(double size)
+{
+    this->m_size = size;
+}
+
+double TriangleMesh::getShape() const
+{
+    return this->m_shape;
+}
+
+void TriangleMesh::setShape(double shape)
+{
+    this->m_shape = shape;
+}
+
+QColor TriangleMesh::getColor() const
+{
+    return this->m_color;
+}
+
+void TriangleMesh::setColor(const QColor &color)
+{
+    this->m_color = color;
+}
+
+const QVector<CDTP::Point>& TriangleMesh::getSeedPoints() const
+{
+    return this->seeds;
+}
+
+void TriangleMesh::setSeedPoints(const QVector<QPointF> &seeds)
+{
+    this->seeds.clear();
+    for(auto iter = seeds.begin(); iter != seeds.end(); ++iter)
+    {
+        CDTP::Point seed = CDTP::Point((*iter).x(), (*iter).y());
+        this->seeds.push_back(seed);
+    }
+}
+
+const CDTP& TriangleMesh::getTriangleMesh() const
+{
+    return this->mesh;
+}
+
+QVector<CDTP::Constraint_id> TriangleMesh::InsertConstraints(vtkPolyData *dataset)
+{
+
+    vtkPoints *points = dataset->GetPoints();
+    vtkCellArray *lines = dataset->GetLines();
+
+    vtkIdType pos = 0;
+    vtkIdType npts, *ids;
+    double A[3], B[3];
+
+    QVector<CDTP::Constraint_id> constraints;
+    constraints.reserve(dataset->GetNumberOfPoints());
+
+    for (vtkIdType i = 0; i < lines->GetNumberOfCells(); i++)
+    {
+        lines->GetCell(pos, npts, ids);
+        pos = (i + 1) * (npts + 1);
+
+        if(VTK_POLY_LINE == dataset->GetCellType(i))
+        {
+            for(vtkIdType j = 0; j < npts - 1; j++)
+            {
+                points->GetPoint(ids[j], A);
+                points->GetPoint(ids[j + 1], B);
+                Epick::Point_2 src = Epick::Point_2(A[0], A[1]);
+                Epick::Point_2 tar = Epick::Point_2(B[0], B[1]);
+                CDTP::Constraint_id constraint = this->mesh.insert_constraint(src, tar);
+                constraints.push_back(constraint);
+            }
+        }
+        else if (VTK_LINE == dataset->GetCellType(i))
+        {
+            points->GetPoint(ids[0], A);
+            points->GetPoint(ids[1], B);
+            Epick::Point_2 src = Epick::Point_2(A[0], A[1]);
+            Epick::Point_2 tar = Epick::Point_2(B[0], B[1]);
+            CDTP::Constraint_id constraint = this->mesh.insert_constraint(src, tar);
+            constraints.push_back(constraint);
+        }
+
+        constraints.squeeze();
+    }
+
+    return constraints;
+}
+
+Opt_code TriangleMesh::RefineDelaunayMesh()
+{
+    // 1.Refine mesh
+    Criteria crit(this->m_shape, this->m_size);
+    Mesher mesher(this->mesh, crit);
+    mesher.set_seeds(seeds.begin(), seeds.end(), false);
+    mesher.refine_mesh();
+
+    if(mesh.is_valid())
+    {
+        qDebug() << "Triangulation Vertices number is: " << mesh.number_of_vertices();
+        qDebug() << "Triangulation Constraints number is: " << mesh.number_of_constraints();
+        qDebug() << "Triangulation Faces number is: " << mesh.number_of_faces();
+    }
+
+    // 2.Optimize shape
+    return CGAL::lloyd_optimize_mesh_2(mesh, CGAL::parameters::max_iteration_number = n_iters,
+                                       CGAL::parameters::seeds_begin = seeds.begin(),
+                                       CGAL::parameters::seeds_end = seeds.end());
+}
+
+size_t TriangleMesh::InitMeshNodeId()
+{
+    size_t index = 0;
+    for(auto iter = mesh.finite_vertices_begin(); iter != mesh.finite_vertices_end(); ++iter)
+    {
+        (*iter).info().id = index;
+        index++;
+    }
+
+    return index;
+}
+
+size_t TriangleMesh::InitMeshCellId()
+{
+    size_t index = 0;
+    for(auto iter = mesh.finite_faces_begin(); iter != mesh.finite_faces_end(); ++iter)
+    {
+        (*iter).info().id = index;
+        for(int i = 0; i < 3; i++)
+        {
+            (*iter).info().node[i] = iter->vertex(i)->info().id;
+        }
+
+        index++;
+    }
+
+    return index;
+}

@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FDEMWindow</class>
+ <widget class="QMainWindow" name="FDEMWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1202</width>
+    <height>654</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Arial</family>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>FDEMWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout_3"/>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1202</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuWindow">
+    <property name="title">
+     <string>Window</string>
+    </property>
+    <addaction name="actionWindowStatusBar"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionViewFullScreen"/>
+    <addaction name="actionIndexedLUT"/>
+    <addaction name="actionResetRange"/>
+    <addaction name="actionViewAxes"/>
+    <addaction name="actionViewGrid"/>
+    <addaction name="separator"/>
+    <addaction name="actionViewFrontView"/>
+    <addaction name="actionViewResetCamera"/>
+    <addaction name="separator"/>
+    <addaction name="actionViewNodeIds"/>
+    <addaction name="actionViewCellIds"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+    <addaction name="actionSettingsBkg"/>
+    <addaction name="actionSettingsGrid"/>
+    <addaction name="actionSettingsBar"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+    <addaction name="actionHelpTimestep"/>
+   </widget>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionWorkspace"/>
+    <addaction name="separator"/>
+    <addaction name="actionExportModel"/>
+    <addaction name="actionExportGeometry"/>
+    <addaction name="separator"/>
+    <addaction name="actionExportBoundary"/>
+    <addaction name="actionExportFracture"/>
+    <addaction name="separator"/>
+    <addaction name="actionExportTriangulation"/>
+    <addaction name="actionExportVoronoi"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionTranslate"/>
+    <addaction name="actionRotate"/>
+    <addaction name="actionScale"/>
+   </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="actionFractalDim"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuView"/>
+   <addaction name="menuTools"/>
+   <addaction name="menuSettings"/>
+   <addaction name="menuWindow"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionWorkspace"/>
+   <addaction name="actionExportGeometry"/>
+   <addaction name="actionExportTriangulation"/>
+   <addaction name="actionExportModel"/>
+   <addaction name="separator"/>
+   <addaction name="actionViewFullScreen"/>
+   <addaction name="actionViewFrontView"/>
+   <addaction name="actionViewResetCamera"/>
+   <addaction name="separator"/>
+   <addaction name="actionViewAxes"/>
+   <addaction name="actionViewGrid"/>
+   <addaction name="actionViewNodeIds"/>
+   <addaction name="actionViewCellIds"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QDockWidget" name="informationWidget">
+   <property name="minimumSize">
+    <size>
+     <width>350</width>
+     <height>94</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="windowTitle">
+    <string>Information</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="parameterWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>400</width>
+     <height>39</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="windowTitle">
+    <string>Parameter</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QToolBar" name="dataToolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionResetRange"/>
+  </widget>
+  <widget class="QToolBar" name="viewToolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionIndexedLUT"/>
+  </widget>
+  <action name="actionViewAxes">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="qFDEM.qrc">
+     <normaloff>:/images/resources/pqShowOrientationAxes.png</normaloff>:/images/resources/pqShowOrientationAxes.png</iconset>
+   </property>
+   <property name="text">
+    <string>Orientation Axes</string>
+   </property>
+  </action>
+  <action name="actionViewGrid">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="qFDEM.qrc">
+     <normaloff>:/images/resources/grid_menu.png</normaloff>:/images/resources/grid_menu.png</iconset>
+   </property>
+   <property name="text">
+    <string>Background Grid</string>
+   </property>
+  </action>
+  <action name="actionViewBar">
+   <property name="icon">
+    <iconset resource="qFDEM.qrc">
+     <normaloff>:/images/resources/contour_view.png</normaloff>:/images/resources/contour_view.png</iconset>
+   </property>
+   <property name="text">
+    <string>Legend Bar</string>
+   </property>
+  </action>
+  <action name="actionSettingsBkg">
+   <property name="text">
+    <string>Background Color ...</string>
+   </property>
+  </action>
+  <action name="actionSettingsGrid">
+   <property name="text">
+    <string>Background Grid ...</string>
+   </property>
+  </action>
+  <action name="actionSettingsBar">
+   <property name="text">
+    <string>Legend Bar ...</string>
+   </property>
+  </action>
+  <action name="actionViewFullScreen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="qFDEM.qrc">
+     <normaloff>:/images/resources/FullScreen.png</normaloff>:/images/resources/FullScreen.png</iconset>
+   </property>
+   <property name="text">
+    <string>Full Screen</string>
+   </property>
+  </action>
+  <action name="actionWindowStatusBar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Status Bar</string>
+   </property>
+  </action>
+  <action name="actionViewResetCamera">
+   <property name="icon">
+    <iconset resource="qFDEM.qrc">
+     <normaloff>:/images/resources/pqResetCamera.png</normaloff>:/images/resources/pqResetCamera.png</iconset>
+   </property>
+   <property name="text">
+    <string>Reset Camera</string>
+   </property>
+  </action>
+  <action name="actionViewFrontView">
+   <property name="icon">
+    <iconset resource="qFDEM.qrc">
+     <normaloff>:/images/resources/pqZMinus.png</normaloff>:/images/resources/pqZMinus.png</iconset>
+   </property>
+   <property name="text">
+    <string>Front View</string>
+   </property>
+  </action>
+  <action name="actionSettingsClearInfo">
+   <property name="text">
+    <string>Clear InfoPanel</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About...</string>
+   </property>
+  </action>
+  <action name="actionViewNodeIds">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="qFDEM.qrc">
+     <normaloff>:/images/resources/nodeId_view.png</normaloff>:/images/resources/nodeId_view.png</iconset>
+   </property>
+   <property name="text">
+    <string>Node IDs</string>
+   </property>
+  </action>
+  <action name="actionViewCellIds">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="qFDEM.qrc">
+     <normaloff>:/images/resources/cellId_view.png</normaloff>:/images/resources/cellId_view.png</iconset>
+   </property>
+   <property name="text">
+    <string>Cell IDs</string>
+   </property>
+  </action>
+  <action name="actionIndexedLUT">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="qFDEM.qrc">
+     <normaloff>:/images/resources/pqPalette.png</normaloff>:/images/resources/pqPalette.png</iconset>
+   </property>
+   <property name="text">
+    <string>Indexes LUT</string>
+   </property>
+  </action>
+  <action name="actionResetRange">
+   <property name="icon">
+    <iconset resource="qFDEM.qrc">
+     <normaloff>:/images/resources/pqResetRange.png</normaloff>:/images/resources/pqResetRange.png</iconset>
+   </property>
+   <property name="text">
+    <string>Reset Range</string>
+   </property>
+  </action>
+  <action name="actionExportModel">
+   <property name="icon">
+    <iconset resource="qFDEM.qrc">
+     <normaloff>:/images/resources/export_menu.png</normaloff>:/images/resources/export_menu.png</iconset>
+   </property>
+   <property name="text">
+    <string>Export Model to solver...</string>
+   </property>
+  </action>
+  <action name="actionExportTriangulation">
+   <property name="icon">
+    <iconset resource="qFDEM.qrc">
+     <normaloff>:/images/resources/material_view.png</normaloff>:/images/resources/material_view.png</iconset>
+   </property>
+   <property name="text">
+    <string>Export Triangulation...</string>
+   </property>
+  </action>
+  <action name="actionTranslate">
+   <property name="icon">
+    <iconset resource="qFDEM.qrc">
+     <normaloff>:/images/resources/translate.png</normaloff>:/images/resources/translate.png</iconset>
+   </property>
+   <property name="text">
+    <string>Translate ...</string>
+   </property>
+  </action>
+  <action name="actionRotate">
+   <property name="icon">
+    <iconset resource="qFDEM.qrc">
+     <normaloff>:/images/resources/rotate.png</normaloff>:/images/resources/rotate.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rotate ...</string>
+   </property>
+  </action>
+  <action name="actionScale">
+   <property name="icon">
+    <iconset resource="qFDEM.qrc">
+     <normaloff>:/images/resources/pqPreview.png</normaloff>:/images/resources/pqPreview.png</iconset>
+   </property>
+   <property name="text">
+    <string>Scale ...</string>
+   </property>
+  </action>
+  <action name="actionFractalDim">
+   <property name="text">
+    <string>Fractal Dimension ...</string>
+   </property>
+  </action>
+  <action name="actionExportVoronoi">
+   <property name="text">
+    <string>Export Voronoi Diagram...</string>
+   </property>
+  </action>
+  <action name="actionExportBoundary">
+   <property name="text">
+    <string>Export Boundary...</string>
+   </property>
+  </action>
+  <action name="actionExportFracture">
+   <property name="text">
+    <string>Export Fractures...</string>
+   </property>
+  </action>
+  <action name="actionExportGeometry">
+   <property name="icon">
+    <iconset resource="qFDEM.qrc">
+     <normaloff>:/images/resources/gmsh_logo.png</normaloff>:/images/resources/gmsh_logo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Export Geometry to Gmsh...</string>
+   </property>
+  </action>
+  <action name="actionHelpTimestep">
+   <property name="icon">
+    <iconset resource="qFDEM.qrc">
+     <normaloff>:/images/resources/help.png</normaloff>:/images/resources/help.png</iconset>
+   </property>
+   <property name="text">
+    <string>Timestep selection...</string>
+   </property>
+  </action>
+  <action name="actionWorkspace">
+   <property name="icon">
+    <iconset resource="qFDEM.qrc">
+     <normaloff>:/images/resources/home.png</normaloff>:/images/resources/home.png</iconset>
+   </property>
+   <property name="text">
+    <string>Set Workspace Directory...</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="qFDEM.qrc"/>
+ </resources>
+ <connections/>
+</ui>

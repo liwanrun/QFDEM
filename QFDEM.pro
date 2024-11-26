@@ -30,6 +30,7 @@ SOURCES += \
     abaqusmeshimporter.cpp \
     actor.cpp \
     actorcollection.cpp \
+    asciifileparser.cpp \
     backgroundgrid.cpp \
     backgroundgriddialog.cpp \
     block.cpp \
@@ -166,6 +167,7 @@ HEADERS += \
     abaqusmeshimporter.h \
     actor.h \
     actorcollection.h \
+    asciifileparser.h \
     backgroundgrid.h \
     backgroundgriddialog.h \
     block.h \

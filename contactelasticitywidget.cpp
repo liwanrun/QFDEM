@@ -57,8 +57,7 @@ void ContactElasticityWidget::CreateConstitutiveProperty(ConstitutiveModel *cons
     property->setAttribute(QString("minimum"), 0.0);
     property->setAttribute(QString("decimals"), 3);
     property->setPropertyId(QString("ContactFriction"));
-    property->setValue(this->model->contactFriction);
-    property->setValue(0.1);
+    property->setValue(QString::number(this->model->contactFriction));
     ui->treeBrowser->addProperty(property);
 
     this->SetBackgroundColor(QColor(255, 255, 191));
@@ -84,7 +83,6 @@ void ContactElasticityWidget::SetBackgroundColor(const QColor &color)
 void ContactElasticityWidget::slotPropertyValueChanged(QtProperty *property, const QVariant &value)
 {
     QString id = property->propertyId();
-
     if(id == QString("NormalStiffness"))
     {
         bool ok; double val = value.toDouble(&ok);
@@ -97,6 +95,7 @@ void ContactElasticityWidget::slotPropertyValueChanged(QtProperty *property, con
     }
     else if(id == QString("ContactFriction"))
     {
-        this->model->contactFriction = value.toDouble();
+        bool ok; double val = value.toDouble(&ok);
+        if(ok) this->model->contactFriction = val;
     }
 }

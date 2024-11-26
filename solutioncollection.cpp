@@ -70,7 +70,8 @@ SolutionCollection::SolutionCollection()
     qDebug() << "SolutionCollection()";
 
     /* Mechanical */
-    this->mechanicalSolution = 0;
+    this->triMechSolution = false;
+    this->cohMechSolution = 0;
 
     /* Hydraulic */
     this->hydraulicSolution = 0;
@@ -162,8 +163,10 @@ QTextStream &operator<<(QTextStream &out, QSharedPointer<SolutionCollection> col
 
     if(MECHANICAL & collection->GetSolutionModule())
     {
-        PRINT_INT_NOENDL(out, QString("/YD/YDC/ICMJDO"), collection->mechanicalSolution);
-        PRINT_STR_COMMENT(out, QString("/* (0)Intrinsic (1)Extrinsic */"));
+        PRINT_INT_NOENDL(out, QString("/YD/YDC/ICMEDO"), collection->triMechSolution);
+        PRINT_STR_COMMENT(out, QString("/* (0)Contain-CZM (1)Without-CZM (Geostress) */"));
+        PRINT_INT_NOENDL(out, QString("/YD/YDC/ICMJDO"), collection->cohMechSolution);
+        PRINT_STR_COMMENT(out, QString("/* (0)Intrinsic-CZM (1)Extrinsic-CZM */"));
     }
 
     if(HYDRAULIC & collection->GetSolutionModule())
@@ -279,8 +282,18 @@ QTextStream &operator<<(QTextStream &out, QSharedPointer<SolutionCollection> col
         collection->OutputSolutionProperty(out, QString("D1CCRIT"));
     }
 
-    collection->OutputSolutionProperty(out, QString("I1CONTA"));
-    collection->OutputSolutionProperty(out, QString("I1CHEFF"));
+    if(MECHANICAL & collection->GetSolutionModule())
+    {
+
+        collection->OutputSolutionProperty(out, QString("I1CONTA"));
+        collection->OutputSolutionProperty(out, QString("I1CMCOH"));
+    }
+
+    if(HYDRAULIC & collection->GetSolutionModule())
+    {
+        collection->OutputSolutionProperty(out, QString("I1CHEFF"));
+    }
+
     if(collection->IsSolutionOptionEnabled(QString("I1CSTEX")))
     {
         collection->OutputSolutionProperty(out, QString("I1CSTEX"));

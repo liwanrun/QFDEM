@@ -53,20 +53,20 @@ void FDEMContactWidget::InitPropertyBrowser()
     property->setValue(contact->bufferZoneSize);
     root->addSubProperty(property);
 
-    property = manager->addProperty(QtVariantPropertyManager::enumTypeId(), QString("ContactSelection"));
-    names.clear();
-    names << "Adaptive" << "Ubiquitous";
-    property->setAttribute(QString("enumNames"), names);
-    property->setPropertyId(QString("ContactSelection"));
-    property->setValue(contact->contactSelection);
-    root->addSubProperty(property);
-
     property = manager->addProperty(QtVariantPropertyManager::enumTypeId(), QString("ContactAlgorithm"));
     names.clear();
-    names << "MunjizaNBS" << "MigrateALG";
+    names << "Adaptive" << "Ubiquitous" << "Interface";
     property->setAttribute(QString("enumNames"), names);
     property->setPropertyId(QString("ContactAlgorithm"));
     property->setValue(contact->contactAlgorithm);
+    root->addSubProperty(property);
+
+    property = manager->addProperty(QtVariantPropertyManager::enumTypeId(), QString("ContactDetection"));
+    names.clear();
+    names << "MunjizaNBS" << "MigrateALG";
+    property->setAttribute(QString("enumNames"), names);
+    property->setPropertyId(QString("ContactDetection"));
+    property->setValue(contact->contactDetection);
     root->addSubProperty(property);
 
     property = manager->addProperty(QtVariantPropertyManager::enumTypeId(), QString("ContactPotential"));
@@ -110,13 +110,13 @@ void FDEMContactWidget::slotTreeBrowserValueChanged(QtProperty *property, const 
     {
         this->contact->bufferZoneSize = value.toDouble();
     }
-    else if(QString("ContactSelection") == id)
-    {
-        this->contact->contactSelection = value.toInt();
-    }
     else if(QString("ContactAlgorithm") == id)
     {
         this->contact->contactAlgorithm = value.toInt();
+    }
+    else if(QString("ContactDetection") == id)
+    {
+        this->contact->contactDetection = value.toInt();
     }
     //Interaction
     else if(QString("ContactPotential") == id)

@@ -300,7 +300,7 @@ void FDEMWindow::slotAboutTriggered()
 {
     QMessageBox::about(this, QString("About ") + this->windowTitle(),
                        QString("<div><center><h1>") + QString("QFDEM(Version_3.25.33_LTS)") + "</h1>" +
-                       "<div>Copyright &#169; 2024 Wanrun Li</div>"
+                       "<div>Copyright &#169; 2025 Wanrun Li</div>"
                        "<div>This program is the preprocessor of FDEM input files.</div>"
                        "<div>If you have any problems, feel free to send emails to "
                        "<a href=\"mailto:liwanrun@qq.com\">liwanrun@qq.com</a></div>");

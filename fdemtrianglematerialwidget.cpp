@@ -67,30 +67,35 @@ void FDEMTriangleMaterialWidget::slotColumnSolutionChanged(const QString id)
     int index = id.split(QChar('-')).last().toInt();
     this->material->enableStep = index;
 
-    QSharedPointer<SolutionCollection> solutionCollection = SolutionCollection::GetSolutionCollection();
-    SolutionCollection::SolutionMap solution_map = solutionCollection->GetSolutionMap();
-    if(solution_map.contains(index))
-    {
-        QMap<QString, QVariant> properties = solution_map[index]->propertyMap;
-        int cmode = solutionCollection->GetSolutionModule();
-        int mmode = properties[QString("I1MMODE")].toInt();
-        int hmode = properties[QString("I1HMODE")].toInt();
-        int tmode = properties[QString("I1TMODE")].toInt();
+    QSharedPointer<SolutionCollection> solutionCollection = SolutionCollection::GetSolutionCollection();    
+    int solution_mode = solutionCollection->GetSolutionModule();
+    ui->contactGroup->setHidden(!(solution_mode & MECHANICAL));
+    ui->mechanicalGroup->setHidden(!(solution_mode & MECHANICAL));
+    ui->hydraulicGroup->setHidden(!(solution_mode & HYDRAULIC));
+    ui->thermalGroup->setHidden(!(solution_mode & THERMAL));
 
-        ui->contactGroup->setHidden(!(cmode & MECHANICAL));
-        material->isMechanicalAnalysisEnabled = (cmode & MECHANICAL) && (mmode & Solution::DEFORMATION);
-        ui->mechanicalGroup->setHidden(!material->isMechanicalAnalysisEnabled);
-        material->isHydraulicAnalysisEnabled = (cmode & HYDRAULIC) && (hmode & Solution::POROSITYSEEP);
-        ui->hydraulicGroup->setHidden(!material->isHydraulicAnalysisEnabled);
-        material->isThermalAnalysisEnabled = (cmode & THERMAL) && (tmode & Solution::SOLIDHEATEX);
-        ui->thermalGroup->setHidden(!material->isThermalAnalysisEnabled);
-    }
+//    SolutionCollection::SolutionMap solution_map = solutionCollection->GetSolutionMap();
+//    if(solution_map.contains(index))
+//    {
+//        QMap<QString, QVariant> properties = solution_map[index]->propertyMap;
+//        int cmode = solutionCollection->GetSolutionModule();
+//        int mmode = properties[QString("I1MMODE")].toInt();
+//        int hmode = properties[QString("I1HMODE")].toInt();
+//        int tmode = properties[QString("I1TMODE")].toInt();
+
+//        ui->contactGroup->setHidden(!(cmode & MECHANICAL));
+//        material->isMechanicalAnalysisEnabled = (cmode & MECHANICAL) && (mmode & Solution::DEFORMATION);
+//        ui->mechanicalGroup->setHidden(!material->isMechanicalAnalysisEnabled);
+//        material->isHydraulicAnalysisEnabled = (cmode & HYDRAULIC) && (hmode & Solution::POROSITYSEEP);
+//        ui->hydraulicGroup->setHidden(!material->isHydraulicAnalysisEnabled);
+//        material->isThermalAnalysisEnabled = (cmode & THERMAL) && (tmode & Solution::SOLIDHEATEX);
+//        ui->thermalGroup->setHidden(!material->isThermalAnalysisEnabled);
+//    }
 }
 
 void FDEMTriangleMaterialWidget::InitMaterialGlobalControlWidget()
 {
     QtVariantProperty* property;
-
     QtProperty *root = manager->addProperty(QtVariantPropertyManager::groupTypeId(), QString("Control Information"));
     ui->treeBrowser->addProperty(root);
 

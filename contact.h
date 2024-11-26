@@ -8,12 +8,12 @@
 class Contact
 {
 public:
-    enum ContactStrategy
+    enum ContactObjective
     {
-        ADAPTIVE = 0, UBIQUITOUS = 1
+        ADAPTIVE = 0, UBIQUITOUS = 1, INTERFACE = 2
     };
 
-    enum ContactAlgorithm
+    enum ContactDetection
     {
         MUNJIZANBS = 0, MIGRATEALG = 1
     };
@@ -39,8 +39,8 @@ private:
     int    coupleCapacity;
     int    coupleSize;
     double bufferZoneSize;
-    int    contactSelection;
     int    contactAlgorithm;
+    int    contactDetection;
 
     int    contactPotential;
 

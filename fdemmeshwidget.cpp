@@ -461,11 +461,11 @@ void FDEMMeshWidget::slotQueryButtonClicked()
 
 void FDEMMeshWidget::slotImportBlockMeshButtonClicked()
 {
-    QString directory = GlobalCollection::GetGlobalCollection()->getWorkspace();
-    QString filter = QString("Gmsh File (*.msh *.msh4);;Distmesh File (*.ply);;"
-                             "Abaqus File (*.inp);;");
+    QString folder = GlobalCollection::GetGlobalCollection()->getWorkspace();
+    QString filter = QString("Gmsh File (*.msh *.msh4);;Distmesh File (*.ply);;Abaqus File (*.inp);;");
+
     QFileDialog dlg(this);
-    dlg.setDirectory(directory);
+    dlg.setDirectory(folder);
     dlg.setNameFilter(filter);
     dlg.setViewMode(QFileDialog::Detail);
     dlg.setFileMode(QFileDialog::ExistingFiles);

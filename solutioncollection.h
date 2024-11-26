@@ -11,6 +11,11 @@ enum SolutionModule
     MECHANICAL = 1, HYDRAULIC = 2, THERMAL = 4
 };
 
+enum InvolvedElement
+{
+    TRIANGLE = 1, COHESIVE = 2
+};
+
 class Solution;
 class SolutionCollection
 {
@@ -58,7 +63,8 @@ private:
 
     int solution_module;
 
-    int mechanicalSolution;
+    int triMechSolution;
+    int cohMechSolution;
 
     int hydraulicSolution;
     int monolithicSchemes;

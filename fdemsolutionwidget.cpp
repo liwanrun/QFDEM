@@ -109,6 +109,7 @@ void FDEMSolutionWidget::UpdatePropertyBrowser()
     this->UpdateSolutionProperty(QString("I1CCRIT"));
     this->UpdateSolutionProperty(QString("D1CCRIT"));
     this->UpdateSolutionProperty(QString("I1CONTA"));
+    this->UpdateSolutionProperty(QString("I1CMCOH"));
     this->UpdateSolutionProperty(QString("I1CHEFF"));
     this->UpdateSolutionProperty(QString("I1CSTEX"));
 
@@ -120,7 +121,6 @@ void FDEMSolutionWidget::UpdatePropertyBrowser()
     this->SetPropertyVisibility(QString("D1MSTEC"), hasMechanical);
     this->SetPropertyVisibility(QString("I1HMODE"), hasHydraulic);
     this->SetPropertyVisibility(QString("D1HSTEC"), hasHydraulic);
-    this->SetPropertyVisibility(QString("I1CHEFF"), hasHydraulic);
     this->SetPropertyVisibility(QString("I1TMODE"), hasThermal);
     this->SetPropertyVisibility(QString("D1TSTEC"), hasThermal);
 }
@@ -237,7 +237,16 @@ void FDEMSolutionWidget::slotPropertyManagerValueChanged(QtProperty *property, c
     QString id = property->propertyId();
     this->solution->propertyMap[id] = value;
 
-    if(QString("I1CGRAV") == id)
+    if(QString("I1MMODE") == id)
+    {
+        this->SetPropertyVisibility(QString("I1CONTA"), (TRIANGLE & value.toInt()));
+        this->SetPropertyVisibility(QString("I1CMCOH"), (COHESIVE & value.toInt()));
+    }
+    else if(QString("I1HMODE") == id)
+    {
+        this->SetPropertyVisibility(QString("I1CHEFF"), (TRIANGLE & value.toInt()));
+    }
+    else if(QString("I1CGRAV") == id)
     {
         for(QtProperty* prop : property->subProperties())
         {
@@ -409,9 +418,14 @@ void FDEMSolutionWidget::CreateSolutionOptionProperty()
     property->setPropertyId(QString("I1CONTA"));
     root->addSubProperty(property);
 
-    property = manager->addProperty(QVariant::Bool, QString("IsPoroFlowEnabled"));
+    property = manager->addProperty(QVariant::Bool, QString("IsCohesiveExcluded"));
+    property->setPropertyId(QString("I1CMCOH"));
+    root->addSubProperty(property);
+
+    property = manager->addProperty(QVariant::Bool, QString("IsPorousFlowEnabled"));
     property->setPropertyId(QString("I1CHEFF"));
     root->addSubProperty(property);
+    this->SetPropertyVisibility(QString("I1CHEFF"), false);
 
     property = manager->addProperty(QVariant::Bool, QString("IsAdaptiveEnabled"));
     property->setPropertyId(QString("I1CSTEX"));
@@ -532,7 +546,7 @@ double FDEMSolutionWidget::GetHydraulicFractureTimestep()
             CohesiveMaterial *material = static_cast<CohesiveMaterial*>(iter.value().data());
             CohesiveHydraulicModel *model = static_cast<CohesiveHydraulicModel*>(material->hydraulicModel.data());
 
-            double alpha = blockCollection->minimumMeshSize/model->iniAperture;
+            double alpha = blockCollection->minimumMeshSize/model->maxAperture;
             timestep = fmin(timestep, 1.0*(mu/Kf)*alpha*alpha);
         }
     }

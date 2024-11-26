@@ -50,7 +50,7 @@ void FDEMInformationWidget::PrintHeaderLine(int index)
     QString datetime = locale.toString(QDateTime::currentDateTime(),tr("MMMM dd, yyyy(dddd) | HH:mm:ss"));
     QString logo = QString("==================== Q F D E M ===================\n"
                            "Info: A proprietary preprocessor for YFDEM solver \n"
-                           "Info: Version 3.25.33-LTS, Copyright(C) 2018-2023 \n"
+                           "Info: Version 3.25.33-LTS, Copyright(C) 2018-2025 \n"
                            "Info: %1                                          \n"
                            "==================================================").arg(datetime);
 

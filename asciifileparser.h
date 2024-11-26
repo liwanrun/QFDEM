@@ -1,11 +1,22 @@
-#ifndef VTKFILEPARSER_H
-#define VTKFILEPARSER_H
+#ifndef ASCIIFILEPARSER_H
+#define ASCIIFILEPARSER_H
 
+#include<QString>
 
-class VTKFileParser
+class vtkDoubleArray;
+class ASCIIFileParser
 {
 public:
-    VTKFileParser();
+    ASCIIFileParser();
+
+    void ParseVtkFile(QString fname);
+
+    void ParsePolyFile(QString fname);
+
+    vtkDoubleArray *GetPointArray();
+
+private:
+    vtkDoubleArray *array;
 };
 
-#endif // VTKFILEPARSER_H
+#endif // ASCIIFILEPARSER_H

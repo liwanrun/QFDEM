@@ -63,11 +63,18 @@ void FDEMPreferenceWidget::InitMechanicalProperty()
     mechGroup->setPropertyId(QString("MechanicalOption"));
     ui->treeBrowser->addProperty(mechGroup);
 
-    property = manager->addProperty(QtVariantPropertyManager::enumTypeId(), QString("FractureSolution"));
-    names = QStringList({"Intrinsic CZM", "Extrinsic CZM"});
+    property = manager->addProperty(QtVariantPropertyManager::enumTypeId(), QString("GeostressSolution"));
+    names = QStringList({"Contain-CZM", "Without-CZM"});
+    property->setAttribute(QString("enumNames"), names);
+    property->setPropertyId(QString("ICMEDO"));
+    property->setValue(solutionCollection->triMechSolution);
+    mechGroup->addSubProperty(property);
+
+    property = manager->addProperty(QtVariantPropertyManager::enumTypeId(), QString("CZMInsertSolution"));
+    names = QStringList({"Intrinsic-CZM", "Extrinsic-CZM"});
     property->setAttribute(QString("enumNames"), names);
     property->setPropertyId(QString("ICMJDO"));
-    property->setValue(solutionCollection->mechanicalSolution);
+    property->setValue(solutionCollection->cohMechSolution);
     mechGroup->addSubProperty(property);
 
     for(QtBrowserItem *item : ui->treeBrowser->items(mechGroup))
@@ -285,9 +292,13 @@ void FDEMPreferenceWidget::slotPropertyManagerValueChanged(QtProperty *property,
         this->SetPropertyVisibility(QString("CouplingOption"), !is_decoupling);
     }
     // Mechanical options
+    else if(id == QString("ICMEDO"))
+    {
+        this->solutionCollection->triMechSolution = value.toInt();
+    }
     else if(id == QString("ICMJDO"))
     {
-        this->solutionCollection->mechanicalSolution = value.toInt();
+        this->solutionCollection->cohMechSolution = value.toInt();
     }
     // Hydraulic options
     else if(id == QString("ICHWAY"))

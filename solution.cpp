@@ -22,6 +22,7 @@ Solution::Solution()
     propertyMap.insert(QString("I1CCRIT"), QVariant(false));
     propertyMap.insert(QString("D1CCRIT"), QVariant(1.0e-05));
     propertyMap.insert(QString("I1CONTA"), QVariant(false));
+    propertyMap.insert(QString("I1CMCOH"), QVariant(false));
     propertyMap.insert(QString("I1CHEFF"), QVariant(true));
     propertyMap.insert(QString("I1CSTEX"), QVariant(false));
 }

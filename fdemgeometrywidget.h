@@ -85,6 +85,8 @@ public slots:
 
     void slotInsertDFNButtonClicked();
 
+    void slotImportButtonClicked();
+
     void slotAppendBlockGeometryItem();
 
     void slotRemoveBlockGeometryItem();

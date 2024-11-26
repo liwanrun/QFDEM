@@ -7,6 +7,8 @@
 #include "fracturenetworkdialog.h"
 #include "fracturenetwork.h"
 #include "boundaryclipper.h"
+#include "globalcollection.h"
+#include "asciifileparser.h"
 
 #include <QDebug>
 #include <QIcon>
@@ -14,6 +16,7 @@
 #include <QValidator>
 #include <QDateTime>
 #include <QMessageBox>
+#include <QFileDialog>
 
 #include <exception>
 
@@ -82,6 +85,8 @@ void FDEMGeometryWidget::ConnectSignalSlots()
             this, &FDEMGeometryWidget::slotClippingButtonClicked);
     connect(ui->insertDFNButton, &QPushButton::clicked,
             this, &FDEMGeometryWidget::slotInsertDFNButtonClicked);
+    connect(ui->importButton, &QPushButton::clicked,
+            this, &FDEMGeometryWidget::slotImportButtonClicked);
 }
 
 void FDEMGeometryWidget::InitGeometryTreeView()
@@ -999,4 +1004,48 @@ void FDEMGeometryWidget::slotInsertDFNButtonClicked()
             ui->treeView->setExpanded(index, true);
         }
     }
+}
+
+void FDEMGeometryWidget::slotImportButtonClicked()
+{
+    QItemSelection selection = ui->treeView->selectionModel()->selection();
+    if (selection.isEmpty())
+    {
+        QMessageBox::information(this, QString("Invalid Operation"),
+                                 QString("Please select fracture group."));
+        return;
+    }
+
+    QModelIndex index = selection.indexes()[COL_NAME];
+    QString blockId = index.parent().data().toString();
+    QString groupId = index.data().toString().split(QChar(' ')).first();
+    if(QString("Fractures") != groupId)
+    {
+        QMessageBox::information(this, QString("Invalid Operation"),
+                                 QString("Please select fracture group."));
+        return;
+    }
+
+    QSharedPointer<GlobalCollection> context = GlobalCollection::GetGlobalCollection();
+    QString folder = context->getWorkspace();
+    QString filter = QString("VTK File (*.vtk);;");
+    QString fname = QFileDialog::getOpenFileName(this, tr("Open geometry file"), folder, filter);
+
+    // parse vtk file
+    ASCIIFileParser parser;
+    parser.ParseVtkFile(fname);
+    vtkDoubleArray *endPoints = parser.GetPointArray();
+    int id = blockCollection->GetBlockFractureMap(blockId).size();
+    QString fractureId = QString("fracture-%1").arg(id + 1);
+    QSharedPointer<Primitive> primitive = blockCollection->GetBlockFracture(blockId, fractureId);
+    primitive->setSize(endPoints->GetNumberOfTuples());
+    primitive->setTableData(endPoints);
+    qDebug() << endPoints->GetNumberOfTuples();
+
+    QList<QStandardItem *> items = this->CreateBlockFractureItem(blockId, fractureId);
+    this->treeModel->itemFromIndex(index)->appendRow(items);
+
+    int size = this->treeModel->rowCount(index);
+    this->treeModel->itemFromIndex(index)->setText(groupId + QString(" (%1)").arg(size));
+    ui->treeView->setExpanded(index, true);
 }
